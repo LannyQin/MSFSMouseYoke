@@ -6,3 +6,5 @@
 /MSFSMouseYoke/bin
 /MSFSMouseYoke/obj
 /packages/Nefarius.ViGEm.Client.1.21.256
+.gitattributes
+.gitignore

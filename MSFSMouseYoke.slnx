@@ -3,6 +3,11 @@
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
+  <Folder Name="/解决方案项/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="readme.md" />
+  </Folder>
   <Project Path="MSFSMouseYoke/MSFSMouseYoke.csproj" Id="28cad032-a2b6-472f-9079-3d36cfa8ff0c">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
