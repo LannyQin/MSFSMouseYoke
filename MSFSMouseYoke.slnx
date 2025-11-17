@@ -1,5 +1,8 @@
 <Solution>
   <Configurations>
+    <BuildType Name="All" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
@@ -9,6 +12,7 @@
     <File Path="readme.md" />
   </Folder>
   <Project Path="MSFSMouseYoke/MSFSMouseYoke.csproj" Id="28cad032-a2b6-472f-9079-3d36cfa8ff0c">
+    <BuildType Solution="All|*" Project="Debug" />
     <Platform Solution="*|x64" Project="x64" />
   </Project>
 </Solution>

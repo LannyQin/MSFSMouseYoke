@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,7 +7,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("MSFSMouseYoke")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("MSFSMouseYoke 允许玩家使用鼠标来操控 Microsoft Flight Simulator 中的飞机，就如X-Plane中的鼠标操控方式一样。")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MSFSMouseYoke")]
 [assembly: AssemblyProduct("MSFSMouseYoke")]
@@ -31,3 +32,4 @@ using System.Runtime.InteropServices;
 //
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguage("zh-Hans")]
