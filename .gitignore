@@ -1,11 +1,8 @@
-﻿################################################################################
-# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
-################################################################################
-
+﻿/MSFSMouseYoke/.vs
 /.vs
 /MSFSMouseYoke/bin
 /MSFSMouseYoke/obj
-/packages/Nefarius.ViGEm.Client.1.21.256
+/packages
 .gitattributes
 .gitignore
 /MSFSMouseYoke/publish

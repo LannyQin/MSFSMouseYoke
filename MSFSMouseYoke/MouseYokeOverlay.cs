@@ -86,6 +86,8 @@ namespace MSFSMouseYoke
             this.FormBorderStyle = FormBorderStyle.None;
             this.TopMost = true;
             this.DoubleBuffered = true;
+            //this.Icon = new Icon(new System.IO.MemoryStream(Properties.Resources.AppIcon));
+            this.Icon = new Icon(GetType(), "MSFSMouseYoke.ico");
             mouseControlEnabled = settings.enable_when_start;
 
             // 设置窗口样式：分层、不激活
