@@ -82,9 +82,16 @@ namespace MSFSMouseYoke
         {
             // 保存到配置文件
             SaveSettings();
-            MessageBox.Show("设置已保存，下次启动时生效。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult result = MessageBox.Show("设置已保存，下次启动时生效。\n是否立即重新启动", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (result == DialogResult.Yes)
+            {
+                Application.Restart();
+            }
+            else
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
 
         private void SaveSettings()
