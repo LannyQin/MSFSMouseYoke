@@ -143,8 +143,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SettingsForm1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="MSFSMouseYoke_TemporaryKey.pfx" />
     <None Include="packages.config" />

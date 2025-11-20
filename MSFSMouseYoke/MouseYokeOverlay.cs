@@ -323,8 +323,15 @@ namespace MSFSMouseYoke
         private void ShowSettingsForm()
         {
             // 创建并显示设置窗体
+
+            // 暂时取消置顶以便操作设置界面
+            this.TopMost = false;
+
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.ShowDialog(); // 使用 ShowDialog 使其成为模态对话框
+
+            // 恢复置顶
+            this.TopMost = true;
         }
 
         // 中键长按自定义代码

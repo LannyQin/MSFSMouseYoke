@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.label1 = new System.Windows.Forms.Label();
             this.windowWidthNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -63,6 +62,10 @@
             this.dragButtonComboBox = new System.Windows.Forms.ComboBox();
             this.dragButtonLabel = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.appearance = new System.Windows.Forms.TabPage();
+            this.control = new System.Windows.Forms.TabPage();
+            this.advanced = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.windowWidthNumericUpDown)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.windowHeightNumericUpDown)).BeginInit();
@@ -78,13 +81,17 @@
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.appearance.SuspendLayout();
+            this.control.SuspendLayout();
+            this.advanced.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Location = new System.Drawing.Point(3, 4);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 14);
             this.label1.TabIndex = 0;
@@ -98,7 +105,7 @@
             0,
             0,
             0});
-            this.windowWidthNumericUpDown.Location = new System.Drawing.Point(110, -2);
+            this.windowWidthNumericUpDown.Location = new System.Drawing.Point(115, 1);
             this.windowWidthNumericUpDown.Maximum = new decimal(new int[] {
             400,
             0,
@@ -125,7 +132,7 @@
             this.panel1.Controls.Add(this.windowHeightNumericUpDown);
             this.panel1.Controls.Add(this.windowWidthNumericUpDown);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(6, 6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(288, 30);
             this.panel1.TabIndex = 2;
@@ -134,7 +141,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(173, 0);
+            this.label3.Location = new System.Drawing.Point(184, 4);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 14);
             this.label3.TabIndex = 2;
@@ -148,7 +155,7 @@
             0,
             0,
             0});
-            this.windowHeightNumericUpDown.Location = new System.Drawing.Point(205, -2);
+            this.windowHeightNumericUpDown.Location = new System.Drawing.Point(220, 1);
             this.windowHeightNumericUpDown.Maximum = new decimal(new int[] {
             400,
             0,
@@ -172,7 +179,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(78, 0);
+            this.label2.Location = new System.Drawing.Point(78, 4);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 14);
             this.label2.TabIndex = 1;
@@ -181,7 +188,7 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.borderHasColorCheckBox);
-            this.panel2.Location = new System.Drawing.Point(12, 48);
+            this.panel2.Location = new System.Drawing.Point(6, 42);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(288, 30);
             this.panel2.TabIndex = 3;
@@ -190,7 +197,7 @@
             // 
             this.borderHasColorCheckBox.AutoSize = true;
             this.borderHasColorCheckBox.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.borderHasColorCheckBox.Location = new System.Drawing.Point(6, 0);
+            this.borderHasColorCheckBox.Location = new System.Drawing.Point(6, 4);
             this.borderHasColorCheckBox.Name = "borderHasColorCheckBox";
             this.borderHasColorCheckBox.Size = new System.Drawing.Size(96, 18);
             this.borderHasColorCheckBox.TabIndex = 0;
@@ -201,7 +208,7 @@
             // 
             this.panel3.Controls.Add(this.borderWidthNumericUpDown);
             this.panel3.Controls.Add(this.label6);
-            this.panel3.Location = new System.Drawing.Point(12, 84);
+            this.panel3.Location = new System.Drawing.Point(6, 78);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(288, 30);
             this.panel3.TabIndex = 4;
@@ -209,7 +216,7 @@
             // borderWidthNumericUpDown
             // 
             this.borderWidthNumericUpDown.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.borderWidthNumericUpDown.Location = new System.Drawing.Point(72, -2);
+            this.borderWidthNumericUpDown.Location = new System.Drawing.Point(72, 1);
             this.borderWidthNumericUpDown.Maximum = new decimal(new int[] {
             5,
             0,
@@ -228,7 +235,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Location = new System.Drawing.Point(3, 4);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(63, 14);
             this.label6.TabIndex = 0;
@@ -238,7 +245,7 @@
             // 
             this.panel4.Controls.Add(this.centerLengthNumericUpDown);
             this.panel4.Controls.Add(this.label4);
-            this.panel4.Location = new System.Drawing.Point(12, 120);
+            this.panel4.Location = new System.Drawing.Point(6, 114);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(288, 30);
             this.panel4.TabIndex = 5;
@@ -251,7 +258,7 @@
             0,
             0,
             0});
-            this.centerLengthNumericUpDown.Location = new System.Drawing.Point(114, -2);
+            this.centerLengthNumericUpDown.Location = new System.Drawing.Point(114, 1);
             this.centerLengthNumericUpDown.Maximum = new decimal(new int[] {
             50,
             0,
@@ -275,7 +282,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(3, 0);
+            this.label4.Location = new System.Drawing.Point(3, 5);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(105, 14);
             this.label4.TabIndex = 0;
@@ -287,7 +294,7 @@
             this.panel5.Controls.Add(this.showMouseCrossCheckBox);
             this.panel5.Controls.Add(this.mouseCrossLengthNumericUpDown);
             this.panel5.Controls.Add(this.label5);
-            this.panel5.Location = new System.Drawing.Point(12, 156);
+            this.panel5.Location = new System.Drawing.Point(6, 150);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(288, 30);
             this.panel5.TabIndex = 6;
@@ -296,7 +303,7 @@
             // 
             this.mouseCrossLengthLabel.AutoSize = true;
             this.mouseCrossLengthLabel.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.mouseCrossLengthLabel.Location = new System.Drawing.Point(146, 3);
+            this.mouseCrossLengthLabel.Location = new System.Drawing.Point(146, 6);
             this.mouseCrossLengthLabel.Name = "mouseCrossLengthLabel";
             this.mouseCrossLengthLabel.Size = new System.Drawing.Size(35, 14);
             this.mouseCrossLengthLabel.TabIndex = 4;
@@ -306,7 +313,7 @@
             // 
             this.showMouseCrossCheckBox.AutoSize = true;
             this.showMouseCrossCheckBox.Font = new System.Drawing.Font("宋体", 10F);
-            this.showMouseCrossCheckBox.Location = new System.Drawing.Point(86, 1);
+            this.showMouseCrossCheckBox.Location = new System.Drawing.Point(86, 5);
             this.showMouseCrossCheckBox.Name = "showMouseCrossCheckBox";
             this.showMouseCrossCheckBox.Size = new System.Drawing.Size(54, 18);
             this.showMouseCrossCheckBox.TabIndex = 3;
@@ -322,7 +329,7 @@
             0,
             0,
             0});
-            this.mouseCrossLengthNumericUpDown.Location = new System.Drawing.Point(187, 1);
+            this.mouseCrossLengthNumericUpDown.Location = new System.Drawing.Point(187, 2);
             this.mouseCrossLengthNumericUpDown.Maximum = new decimal(new int[] {
             50,
             0,
@@ -346,7 +353,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(3, 3);
+            this.label5.Location = new System.Drawing.Point(3, 6);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(77, 14);
             this.label5.TabIndex = 0;
@@ -355,7 +362,7 @@
             // panel6
             // 
             this.panel6.Controls.Add(this.controlWhenStartCheckBox);
-            this.panel6.Location = new System.Drawing.Point(12, 192);
+            this.panel6.Location = new System.Drawing.Point(6, 6);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(288, 30);
             this.panel6.TabIndex = 4;
@@ -364,7 +371,7 @@
             // 
             this.controlWhenStartCheckBox.AutoSize = true;
             this.controlWhenStartCheckBox.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.controlWhenStartCheckBox.Location = new System.Drawing.Point(6, 0);
+            this.controlWhenStartCheckBox.Location = new System.Drawing.Point(6, 3);
             this.controlWhenStartCheckBox.Name = "controlWhenStartCheckBox";
             this.controlWhenStartCheckBox.Size = new System.Drawing.Size(124, 18);
             this.controlWhenStartCheckBox.TabIndex = 0;
@@ -375,7 +382,7 @@
             // 
             this.panel7.Controls.Add(this.longPressComboBox);
             this.panel7.Controls.Add(this.label8);
-            this.panel7.Location = new System.Drawing.Point(12, 264);
+            this.panel7.Location = new System.Drawing.Point(6, 78);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(288, 30);
             this.panel7.TabIndex = 6;
@@ -387,7 +394,7 @@
             this.longPressComboBox.Items.AddRange(new object[] {
             "摇杆回中",
             "退出"});
-            this.longPressComboBox.Location = new System.Drawing.Point(114, -2);
+            this.longPressComboBox.Location = new System.Drawing.Point(114, 3);
             this.longPressComboBox.Name = "longPressComboBox";
             this.longPressComboBox.Size = new System.Drawing.Size(121, 20);
             this.longPressComboBox.TabIndex = 1;
@@ -397,7 +404,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(3, 0);
+            this.label8.Location = new System.Drawing.Point(3, 5);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(105, 14);
             this.label8.TabIndex = 0;
@@ -406,7 +413,7 @@
             // OKButton
             // 
             this.OKButton.Font = new System.Drawing.Font("宋体", 10F);
-            this.OKButton.Location = new System.Drawing.Point(3, 3);
+            this.OKButton.Location = new System.Drawing.Point(4, 3);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(65, 28);
             this.OKButton.TabIndex = 7;
@@ -416,7 +423,7 @@
             // cancelButton
             // 
             this.cancelButton.Font = new System.Drawing.Font("宋体", 10F);
-            this.cancelButton.Location = new System.Drawing.Point(74, 3);
+            this.cancelButton.Location = new System.Drawing.Point(75, 3);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(65, 28);
             this.cancelButton.TabIndex = 8;
@@ -427,15 +434,15 @@
             // 
             this.panel8.Controls.Add(this.OKButton);
             this.panel8.Controls.Add(this.cancelButton);
-            this.panel8.Location = new System.Drawing.Point(12, 336);
+            this.panel8.Location = new System.Drawing.Point(84, 310);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(288, 30);
+            this.panel8.Size = new System.Drawing.Size(144, 34);
             this.panel8.TabIndex = 7;
             // 
             // panel9
             // 
             this.panel9.Controls.Add(this.resetButton);
-            this.panel9.Location = new System.Drawing.Point(12, 300);
+            this.panel9.Location = new System.Drawing.Point(3, 3);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(288, 30);
             this.panel9.TabIndex = 9;
@@ -443,7 +450,7 @@
             // resetButton
             // 
             this.resetButton.Font = new System.Drawing.Font("宋体", 10F);
-            this.resetButton.Location = new System.Drawing.Point(3, -1);
+            this.resetButton.Location = new System.Drawing.Point(3, 1);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(110, 28);
             this.resetButton.TabIndex = 7;
@@ -455,7 +462,7 @@
             // 
             this.panel10.Controls.Add(this.dragButtonComboBox);
             this.panel10.Controls.Add(this.dragButtonLabel);
-            this.panel10.Location = new System.Drawing.Point(12, 228);
+            this.panel10.Location = new System.Drawing.Point(6, 42);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(288, 30);
             this.panel10.TabIndex = 7;
@@ -467,7 +474,7 @@
             this.dragButtonComboBox.Items.AddRange(new object[] {
             "右键",
             "中键"});
-            this.dragButtonComboBox.Location = new System.Drawing.Point(114, -2);
+            this.dragButtonComboBox.Location = new System.Drawing.Point(114, 3);
             this.dragButtonComboBox.Name = "dragButtonComboBox";
             this.dragButtonComboBox.Size = new System.Drawing.Size(121, 20);
             this.dragButtonComboBox.TabIndex = 1;
@@ -477,28 +484,65 @@
             // 
             this.dragButtonLabel.AutoSize = true;
             this.dragButtonLabel.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dragButtonLabel.Location = new System.Drawing.Point(3, 0);
+            this.dragButtonLabel.Location = new System.Drawing.Point(3, 5);
             this.dragButtonLabel.Name = "dragButtonLabel";
             this.dragButtonLabel.Size = new System.Drawing.Size(49, 14);
             this.dragButtonLabel.TabIndex = 0;
             this.dragButtonLabel.Text = "拖动键";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.appearance);
+            this.tabControl1.Controls.Add(this.control);
+            this.tabControl1.Controls.Add(this.advanced);
+            this.tabControl1.Location = new System.Drawing.Point(3, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(317, 311);
+            this.tabControl1.TabIndex = 10;
+            // 
+            // appearance
+            // 
+            this.appearance.Controls.Add(this.panel1);
+            this.appearance.Controls.Add(this.panel2);
+            this.appearance.Controls.Add(this.panel3);
+            this.appearance.Controls.Add(this.panel4);
+            this.appearance.Controls.Add(this.panel5);
+            this.appearance.Location = new System.Drawing.Point(4, 22);
+            this.appearance.Name = "appearance";
+            this.appearance.Padding = new System.Windows.Forms.Padding(3);
+            this.appearance.Size = new System.Drawing.Size(309, 285);
+            this.appearance.TabIndex = 0;
+            this.appearance.Text = "外观";
+            // 
+            // control
+            // 
+            this.control.Controls.Add(this.panel6);
+            this.control.Controls.Add(this.panel10);
+            this.control.Controls.Add(this.panel7);
+            this.control.Location = new System.Drawing.Point(4, 22);
+            this.control.Name = "control";
+            this.control.Padding = new System.Windows.Forms.Padding(3);
+            this.control.Size = new System.Drawing.Size(309, 285);
+            this.control.TabIndex = 1;
+            this.control.Text = "控制";
+            // 
+            // advanced
+            // 
+            this.advanced.Controls.Add(this.panel9);
+            this.advanced.Location = new System.Drawing.Point(4, 22);
+            this.advanced.Name = "advanced";
+            this.advanced.Size = new System.Drawing.Size(309, 285);
+            this.advanced.TabIndex = 2;
+            this.advanced.Text = "高级";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(329, 409);
-            this.Controls.Add(this.panel10);
-            this.Controls.Add(this.panel9);
+            this.ClientSize = new System.Drawing.Size(322, 351);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel8);
-            this.Controls.Add(this.panel7);
-            this.Controls.Add(this.panel6);
-            this.Controls.Add(this.panel5);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsForm";
             this.Text = "设置";
             ((System.ComponentModel.ISupportInitialize)(this.windowWidthNumericUpDown)).EndInit();
@@ -524,6 +568,10 @@
             this.panel9.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.appearance.ResumeLayout(false);
+            this.control.ResumeLayout(false);
+            this.advanced.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -563,5 +611,9 @@
         private System.Windows.Forms.ComboBox dragButtonComboBox;
         private System.Windows.Forms.Label dragButtonLabel;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage appearance;
+        private System.Windows.Forms.TabPage control;
+        private System.Windows.Forms.TabPage advanced;
     }
 }
