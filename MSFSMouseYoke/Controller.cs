@@ -1,14 +1,10 @@
-﻿using Nefarius.ViGEm.Client;
+﻿using MSFSMouseYoke.Properties;
+using Nefarius.ViGEm.Client;
 using Nefarius.ViGEm.Client.Targets;
 using Nefarius.ViGEm.Client.Targets.DualShock4;
+using Nefarius.ViGEm.Client.Targets.Xbox360;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MSFSMouseYoke
@@ -16,60 +12,38 @@ namespace MSFSMouseYoke
     internal class Controller
     {
         static private ViGEmClient client;
-        static private IDualShock4Controller controller;
-        static public bool isConnected = false;
         static private Settings settings;
-
-        static public Thread updateThread;
-        static private bool running;
-
-        static private byte _x = 127;
-        static private byte _y = 127;
+        static public bool isConnected => controller?.isConnected ?? false;
+        static public bool running => controller?.running ?? false;
+        static public IController controller;
 
         internal static void Initialize(Settings _settings)
         {
             WarningIfNotInstalled();
             settings = _settings;
-            client = new ViGEmClient();
-            controller = client.CreateDualShock4Controller();
-            Connect();
 
-            running = true;
-            updateThread = new Thread(new ThreadStart(_Update));
-            updateThread.Start();
+            client?.Dispose();
+            client = new ViGEmClient();
+
+            if (true)    //todo
+                controller = new Xbox360Controller();
+            else
+                controller = new DualShock4Controller();
+
+            controller.Initialize(settings, client);
+
         }
 
         internal static void WarningIfNotInstalled()
         {
             if (!IsViGEmBusInstalled())
             {
-                DialogResult result = MessageBox.Show("未检测到ViGEmBus驱动程序，请检查ViGEmBus是否正确安装，若未安装控制器功能将无法使用。\n请前往 https://github.com/nefarius/ViGEmBus/releases 下载并安装ViGEmBus驱动程序。\n点击“是”退出程序并前往下载\n点击“否”忽略警告并继续使用本软件\n点击“取消”以退出本软件", "警告", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Warning);
-                if (result == DialogResult.Yes)
-                {
-                    var url = "https://github.com/nefarius/ViGEmBus/releases";
-                    try
-                    {
-                        var psi = new ProcessStartInfo
-                        {
-                            FileName = url,
-                            UseShellExecute = true
-                        };
-                        Process.Start(psi);
-                    }
-                    catch (Win32Exception)
-                    {
-                        // 备选方案：通过 cmd 启动，或提示用户手动打开链接
-                        Process.Start("cmd", $"/c start \"\" \"{url}\"");
-                    }
-
-                    Environment.Exit(0);
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    Environment.Exit(0);
-                }
-                else if (result == DialogResult.No)
-                { }
+                MessageBox.Show(
+                    "未检测到 ViGEmBus 驱动，请安装后重试。\nhttps://github.com/nefarius/ViGEmBus/releases",
+                    "警告",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                Environment.Exit(0);
             }
         }
 
@@ -77,23 +51,79 @@ namespace MSFSMouseYoke
         {
             try
             {
-                using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Services"))
+                using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Services\ViGEmBus"))
                 {
-                    if (key != null)
-                    {
-                        var subKeyNames = key.GetSubKeyNames();
-                        return subKeyNames.Any(name => name.Contains("ViGEmBus"));
-                    }
+                    return key != null;
                 }
             }
-            catch
-            {
-                // 忽略错误
-            }
-            return false;
+            catch { return false; }
         }
 
-        internal static void Connect()
+        public static void Connent()
+        {
+            controller.Connect();
+        }
+        public static void Disconnect()
+        {
+            controller.Disconnect();
+        }
+        public static void ChangeConnectionStatus()
+        {
+            controller.ChangeConnectionStatus();
+        }
+        public static void Update(double x, double y)
+        {
+            controller.Update(x, y);
+        }
+        public static void Dispose()
+        {
+            controller.Dispose();
+        }
+    }
+
+    interface IController
+    {
+        bool running { get; }
+        bool isConnected { get; }
+        void Initialize(Settings _settings, ViGEmClient _client);
+        void Connect();
+        void Disconnect();
+        void ChangeConnectionStatus();
+        void Update(double x, double y);  //Update:程序界面将鼠标坐标发送给具体类并处理    _Update:线程循环将处理后的坐标发送给虚拟手柄
+        void Dispose();
+    }
+
+    internal class Xbox360Controller : IController
+    {
+        private ViGEmClient client;
+        private IXbox360Controller controller;
+        private Settings settings;
+        public bool isConnected { get; private set; }
+
+        private Thread updateThread;
+        public bool running { get; private set; }
+
+        private short _x = 0;
+        private short _y = 0;
+
+        public void Initialize(Settings _settings, ViGEmClient _client)
+        {
+            settings = _settings;
+            client = _client;
+            isConnected = false;
+
+            controller = client.CreateXbox360Controller();
+            Connect();
+
+            running = true;
+            updateThread = new Thread(_Update);
+            updateThread.IsBackground = true;
+            updateThread.Start();
+        }
+
+
+
+        public void Connect()
         {
             if (!isConnected)
             {
@@ -102,7 +132,7 @@ namespace MSFSMouseYoke
             }
         }
 
-        internal static void Disconnect()
+        public void Disconnect()
         {
             if (isConnected)
             {
@@ -111,26 +141,102 @@ namespace MSFSMouseYoke
             }
         }
 
-        internal static void ChangeConnectionStatus()
+        public void ChangeConnectionStatus()
+        {
+            if (isConnected) Disconnect();
+            else Connect();
+        }
+
+        public void Update(double x, double y)
+        {
+            _x = (short)(Math.Max(-1, Math.Min(1, x)) * 32767);
+            _y = (short)(Math.Max(-1, Math.Min(1, y)) * 32767);
+        }
+
+        private void _Update()
+        {
+            while (running)
+            {
+                if (isConnected)
+                {
+                    controller.SetAxisValue(Xbox360Axis.LeftThumbX, _x);
+                    controller.SetAxisValue(Xbox360Axis.LeftThumbY, _y);
+                    controller.SubmitReport();
+                }
+                Thread.Sleep(2); // 防止 CPU 占满
+            }
+        }
+
+        public void Dispose()
+        {
+            running = false;
+            Disconnect();
+            client?.Dispose();
+        }
+    }
+
+    internal class DualShock4Controller : IController
+    {
+        private ViGEmClient client;
+        private IDualShock4Controller controller;
+        private Settings settings;
+
+        public bool isConnected { get; private set; }
+        public bool running { get; private set; }
+
+        private Thread updateThread;
+
+        private byte _x = 127;
+        private byte _y = 127;
+
+        public void Initialize(Settings _settings, ViGEmClient _client)
+        {
+            settings = _settings;
+            client = _client;
+            isConnected = false;
+
+            controller = client.CreateDualShock4Controller();
+            Connect();
+
+            running = true;
+            updateThread = new Thread(_Update);
+            updateThread.IsBackground = true;
+            updateThread.Start();
+        }
+
+        public void Connect()
+        {
+            if (!isConnected)
+            {
+                controller.Connect();
+                isConnected = true;
+            }
+        }
+
+        public void Disconnect()
         {
             if (isConnected)
             {
-                Disconnect();
+                controller.Disconnect();
+                isConnected = false;
             }
-            else
-            {
-                Connect();
-            }
-
         }
 
-        internal static void Update(double x, double y)
+        public void ChangeConnectionStatus()
+        {
+            if (isConnected)
+                Disconnect();
+            else
+                Connect();
+        }
+
+        public void Update(double x, double y)
         {
             _x = Convert.ToByte(Math.Min(Math.Max((x + 1.0) * 128, 0), 255));
             _y = Convert.ToByte(Math.Min(Math.Max((y + 1.0) * 128, 0), 255));
         }
 
-        private static void _Update()
+        private void _Update()
         {
             while (running)
             {
@@ -138,18 +244,18 @@ namespace MSFSMouseYoke
                 {
                     controller.SetAxisValue(DualShock4Axis.LeftThumbX, _x);
                     controller.SetAxisValue(DualShock4Axis.LeftThumbY, _y);
-
-                    // 提交更新
                     controller.SubmitReport();
                 }
+                Thread.Sleep(2);
             }
         }
 
-        internal static void Dispose()
+        public void Dispose()
         {
             running = false;
             Disconnect();
-            client.Dispose();
+            controller?.Dispose();
+            client?.Dispose();
         }
     }
 }

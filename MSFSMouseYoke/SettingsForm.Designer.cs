@@ -543,8 +543,12 @@
             this.ClientSize = new System.Drawing.Size(322, 351);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel8);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximumSize = new System.Drawing.Size(338, 390);
+            this.MinimumSize = new System.Drawing.Size(338, 390);
             this.Name = "SettingsForm";
             this.Text = "设置";
+            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.windowWidthNumericUpDown)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
