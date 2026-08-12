@@ -65,11 +65,11 @@ namespace MSFSMouseYoke
         public double x = 0;
         public double y = 0;
 
-        // 中键相关功能
-        private bool isMiddleMouseDown = false;
-        private DateTime middleMouseDownTime;
-        private Timer middleMouseTimer;
-        private const int MiddleMouseLongPressThreshold = 500; // 长按时间阈值（毫秒）
+        private DateTime leftMouseDownTime;
+        private Timer leftLongPressTimer;
+        private Point rightMouseDownPosition = Point.Empty;   // 右键按下的起点
+        private const int DragThreshold = 10;  // 显示菜单栏的最大拖动距离
+        private const int LongPressThreshold = 300; // 毫秒
 
         public MouseYokeOverlay()
         {
@@ -111,11 +111,6 @@ namespace MSFSMouseYoke
             this.MouseUp += OnMouseUp;
             this.Paint += OnPaint;
             //this.KeyDown += OnKeyDown;
-
-            // 初始化中键长按计时器
-            middleMouseTimer = new Timer();
-            middleMouseTimer.Interval = MiddleMouseLongPressThreshold;
-            middleMouseTimer.Tick += OnMiddleMouseLongPress;
 
             // 激活控制器
             Controller.Initialize(settings);
@@ -160,50 +155,47 @@ namespace MSFSMouseYoke
 
         private void SetupTimer()
         {
+            // 更新鼠标位置
             controlTimer = new Timer();
             controlTimer.Interval = 10;
             controlTimer.Tick += OnControlTimerTick;
             controlTimer.Start();
+
+            // 左键长按逻辑
+            leftLongPressTimer = new Timer();
+            leftLongPressTimer.Interval = LongPressThreshold;
+            leftLongPressTimer.Tick += (s, e) =>
+            {
+                leftLongPressTimer.Stop();
+                ToCenter();
+            };
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (Controller.isConnected)
-                {
-                    // 左键点击切换鼠标控制状态
-                    ChangeMouseEnableState();
-                    UpdateVisualState();
-                    this.Invalidate();
-                }
-                else
+                leftMouseDownTime = DateTime.Now;
+                leftLongPressTimer.Start(); // 开始计时
+
+                if (!Controller.isConnected)
                 {
                     mouseControlEnabled = false;
                     DisableMouseLock();
                 }
             }
-            else if ((settings.drag_button=="middle")?(e.Button == MouseButtons.Middle):(e.Button==MouseButtons.Right))
+            else if (e.Button == MouseButtons.Right)
             {
                 if (!mouseControlEnabled)
                 {
-                    // 右键开始拖动窗口
+                    // 非操控状态：仍然可以拖窗口
                     isDragging = true;
                     mouseDownPosition = Cursor.Position;
                     formStartPosition = this.Location;
-
-                    // 捕获鼠标以便拖动
                     SetCapture(this.Handle);
                 }
-            }
-            else if ((settings.drag_button == "middle") ? (e.Button == MouseButtons.Right) : (e.Button == MouseButtons.Middle))
-            {
-                // 中键按下
-                isMiddleMouseDown = true;
-                middleMouseDownTime = DateTime.Now;
 
-                // 启动长按检测计时器
-                middleMouseTimer.Start();
+                rightMouseDownPosition = Cursor.Position; // 记录起点
             }
         }
 
@@ -223,64 +215,70 @@ namespace MSFSMouseYoke
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            if (((settings.drag_button == "middle") ? (e.Button == MouseButtons.Middle) : (e.Button == MouseButtons.Right)) && isDragging)
+            // ===== 左键 =====
+            if (e.Button == MouseButtons.Left)
             {
-                isDragging = false;
-                ReleaseCapture();
-            }
-            else if (((settings.drag_button == "middle") ? (e.Button == MouseButtons.Right) : (e.Button == MouseButtons.Middle)) && isMiddleMouseDown)
-            {
-                isMiddleMouseDown = false;
-                middleMouseTimer.Stop();
+                leftLongPressTimer.Stop(); // 没到时间就松手，取消回中
 
-                // 计算按下时间
-                TimeSpan pressDuration = DateTime.Now - middleMouseDownTime;
-
-                if (pressDuration.TotalMilliseconds < MiddleMouseLongPressThreshold)
+                TimeSpan pressDuration = DateTime.Now - leftMouseDownTime;
+                if (pressDuration.TotalMilliseconds < LongPressThreshold)
                 {
-                    // 短按：显示右键菜单
-                    ShowContextMenu();
+                    // 只有短按才切换控制
+                    ChangeMouseEnableState();
                 }
+
+                UpdateVisualState();
+                this.Invalidate();
             }
+
+            // ===== 右键 =====
+            if (e.Button == MouseButtons.Right)
+            {
+                if (isDragging)
+                {
+                    isDragging = false;
+                    ReleaseCapture();
+                }
+
+                if (rightMouseDownPosition == Point.Empty)  // 如果没有记录起点，直接返回，防止系统吞事件
+                    return;
+
+                Point currentPos = Cursor.Position;
+                int deltaX = Math.Abs(currentPos.X - rightMouseDownPosition.X);
+                int deltaY = Math.Abs(currentPos.Y - rightMouseDownPosition.Y);
+
+                // 只看移动距离，不看时间
+                if (deltaX <= DragThreshold && deltaY <= DragThreshold)
+                {
+                    ShowContextMenu(); // 没怎么动 → 菜单
+                }
+                // 动了 → 什么都不做（已经是拖窗口）
+            }
+
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            // 更新鼠标位置用于控制计算和绘制光标十字
             lastMousePosition = e.Location;
             this.Invalidate();
 
             if (mouseControlEnabled)
             {
                 beforePauseMousePosition = e.Location;
-                UpdateMouseLock(); // 更新鼠标锁定状态
+                UpdateMouseLock();
             }
 
             if (isDragging)
             {
-                // 使用屏幕坐标计算移动距离，避免闪烁和位置偏移
                 Point currentScreenPos = Cursor.Position;
                 int deltaX = currentScreenPos.X - mouseDownPosition.X;
                 int deltaY = currentScreenPos.Y - mouseDownPosition.Y;
-
                 this.Location = new Point(formStartPosition.X + deltaX, formStartPosition.Y + deltaY);
             }
 
-            // 更新光标显示
             this.Cursor = isDragging ? Cursors.SizeAll : Cursors.Default;
         }
 
-        private void OnMiddleMouseLongPress(object sender, EventArgs e)
-        {
-            if (isMiddleMouseDown)
-            {
-                middleMouseTimer.Stop();
-                isMiddleMouseDown = false;
-
-                // 执行长按自定义代码
-                ExecuteMiddleMouseLongPressAction();
-            }
-        }
 
         private void ShowContextMenu()
         {
@@ -293,7 +291,7 @@ namespace MSFSMouseYoke
             ToolStripMenuItem toCenterItem = new ToolStripMenuItem("摇杆回中");
             toCenterItem.Click += (s, e) => ToCenter();
 
-            ToolStripMenuItem connectStatusItem = new ToolStripMenuItem(Controller.isConnected?"断开摇杆":"连接摇杆");
+            ToolStripMenuItem connectStatusItem = new ToolStripMenuItem(Controller.isConnected ? "断开摇杆" : "连接摇杆");
             connectStatusItem.Click += (s, e) => ChangeConnectionStatus();
 
             ToolStripMenuItem settingsItem = new ToolStripMenuItem("设置");
@@ -332,22 +330,6 @@ namespace MSFSMouseYoke
 
             // 恢复置顶
             this.TopMost = true;
-        }
-
-        // 中键长按自定义代码
-        private void ExecuteMiddleMouseLongPressAction()
-        {
-            // 这里可以添加你的自定义代码
-            // 例如：重置鼠标位置、切换模式等
-
-            if (settings.on_middle_button_long_pressed == "exit")
-            {
-                Application.Exit();
-            }
-            else
-            {
-                ToCenter();
-            }
         }
 
         private void ToCenter()
@@ -508,13 +490,6 @@ namespace MSFSMouseYoke
             if (mouseControlEnabled)
             {
                 ClipCursor(IntPtr.Zero);
-            }
-
-            // 停止并释放计时器
-            if (middleMouseTimer != null)
-            {
-                middleMouseTimer.Stop();
-                middleMouseTimer.Dispose();
             }
 
             // 关闭手柄
