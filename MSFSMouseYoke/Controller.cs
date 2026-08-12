@@ -4,6 +4,7 @@ using Nefarius.ViGEm.Client.Targets;
 using Nefarius.ViGEm.Client.Targets.DualShock4;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -25,7 +26,7 @@ namespace MSFSMouseYoke
             client?.Dispose();
             client = new ViGEmClient();
 
-            if (true)    //todo
+            if (settings.controller_type == "xbox360")
                 controller = new Xbox360Controller();
             else
                 controller = new DualShock4Controller();

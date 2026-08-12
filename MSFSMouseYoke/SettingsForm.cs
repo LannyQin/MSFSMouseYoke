@@ -17,10 +17,7 @@ namespace MSFSMouseYoke
             InitializeComponent();
             this.Load += SettingsForm_Load; // 加载时读取配置
             this.OKButton.Click += OKButton_Click; // 保存按钮点击事件
-
-            // 控件提示
-            this.toolTip.SetToolTip(this.dragButtonComboBox, "当选择右键时，中键显示弹出菜单，右键拖动\n当选择左键时，右键显示弹出菜单，中键拖动");
-            this.toolTip.SetToolTip(this.dragButtonLabel, "当选择右键时，中键显示弹出菜单，右键拖动\n当选择左键时，右键显示弹出菜单，中键拖动");
+            this.cancelButton.Click += CancelButton_Click; // 取消按钮点击事件
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -47,35 +44,23 @@ namespace MSFSMouseYoke
             // 启动设置
             controlWhenStartCheckBox.Checked = Settings.Default.enable_when_start;
 
-            // 中键长按行为
-            string longPressAction = Settings.Default.on_middle_button_long_pressed;
-            object selectedItem;
-            switch (longPressAction)
+            // 控制器类型
+            string controllerType = Settings.Default.controller_type;
+            object controllerTypeSelectedItem;
+            switch (controllerType)
             {
-                case "exit":
-                    selectedItem = longPressComboBox.Items[1];
+                case "dualshock4":
+                    controllerTypeSelectedItem = controllerTypeComboBox.Items[1];
                     break;
-                case "to_center":
+                case "xbox360":
                 default:
-                    selectedItem = longPressComboBox.Items[0];
+                    controllerTypeSelectedItem = controllerTypeComboBox.Items[0];
                     break;
             }
-            longPressComboBox.SelectedItem = selectedItem;
+            controllerTypeComboBox.SelectedItem = controllerTypeSelectedItem;
 
-            // 拖动键
-            string dragAction = Settings.Default.drag_button;
-            object selectedItem2;
-            switch (dragAction)
-            {
-                case "middle":
-                    selectedItem2 = dragButtonComboBox.Items[1];
-                    break;
-                case "right":
-                default:
-                    selectedItem2 = dragButtonComboBox.Items[0];
-                    break;
-            }
-            dragButtonComboBox.SelectedItem = selectedItem2;
+            // 长按时间
+            longPressNumericUpDown.Value = Settings.Default.long_press_threshold;
         }
 
         private void OKButton_Click(object sender, EventArgs e)
@@ -92,6 +77,12 @@ namespace MSFSMouseYoke
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
         private void SaveSettings()
@@ -112,13 +103,12 @@ namespace MSFSMouseYoke
             // 启动设置
             Settings.Default.enable_when_start = controlWhenStartCheckBox.Checked;
 
-            // 中键长按行为
-            Settings.Default.on_middle_button_long_pressed =
-                longPressComboBox.SelectedIndex == 1 ? "exit" : "to_center";
+            // 控制器类型
+            Settings.Default.controller_type =
+                controllerTypeComboBox.SelectedIndex == 1 ? "dualshock4" : "xbox360";
 
-            // 拖动键
-            Settings.Default.drag_button =
-                dragButtonComboBox.SelectedIndex == 1 ? "middle" : "right";
+            // 长按时间
+            Settings.Default.long_press_threshold = (int)longPressNumericUpDown.Value;
 
             Settings.Default.Save(); // 持久化保存
         }
@@ -151,9 +141,8 @@ namespace MSFSMouseYoke
             showMouseCrossCheckBox.Checked = true;                   // cursor_cross_enabled 默认 true
 
             controlWhenStartCheckBox.Checked = false;                // enable_when_start 默认 false
-
-            longPressComboBox.SelectedIndex = 1;                     // on_middle_button_long_pressed 默认 "exit"（索引1）
-            dragButtonComboBox.SelectedIndex = 0;                    // drag_button 默认 "right"（索引0）
+            controllerTypeComboBox.SelectedIndex = 0;                // controller_type 默认 "xbox360"（索引0）
+            longPressNumericUpDown.Value = 300;                      // long_press_threshold 默认 300
         }
     }
 }

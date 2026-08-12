@@ -18,13 +18,13 @@ MSFSMouseYoke 允许玩家使用鼠标来操控 Microsoft Flight Simulator 中的飞机，就如X-
 - 可以在设置中个性化调整软件体验
 
 ## 使用说明
-1. 下载并安装 ViGEmBus 驱动程序：[ViGEmBus Releases](https://github.com/nefarius/ViGEmBus/releases)
+1. 下载并安装 ViGEmBus 驱动程序 [ViGEmBus Releases](https://github.com/nefarius/ViGEmBus/releases)
 2. 从 [Release页面](https://github.com/LannyQin/MSFSMouseYoke/releases) 下载最新版本的 MSFSMouseYoke 可执行文件。
-3. 运行Microsoft Flight Simulator，您应该能够看到有手柄接入的提示，同意即可。
+3. 运行Microsoft Flight Simulator，您应该能够看到有手柄接入的提示。
 4. 尽情地飞行吧！
 
 ## 技术原理
-- 核心技术基于 ViGEmBus，模拟一个虚拟的游戏手柄设备。
+- 核心技术基于 ViGEmBus，模拟一个虚拟的游戏手柄设备（Xbox360或DualShock4）。
 - 创建半透明的窗口，截获鼠标操作并将其转换为手柄输入信号。
 - 键盘事件能够穿透并应用到 Microsoft Flight Simulator 里，以便进一步操纵飞机。
 
@@ -32,3 +32,4 @@ MSFSMouseYoke 允许玩家使用鼠标来操控 Microsoft Flight Simulator 中的飞机，就如X-
 1. 请确保在使用本软件前已正确安装 ViGEmBus 驱动程序。
 2. 本软件仅在 Windows 操作系统上运行。
 3. 本项目还在不断完善中，难免会遇到一些bug，欢迎大家提出建议和反馈。
+4. 由于软件的操作逻辑是通过模拟一个虚拟手柄来实现控制的，所以其他支持Xbox360或DualShock4的飞行类游戏也可以使用本软件，但请自行调试

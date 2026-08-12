@@ -50,22 +50,22 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.controlWhenStartCheckBox = new System.Windows.Forms.CheckBox();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.longPressComboBox = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.OKButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.resetButton = new System.Windows.Forms.Button();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.dragButtonComboBox = new System.Windows.Forms.ComboBox();
-            this.dragButtonLabel = new System.Windows.Forms.Label();
+            this.controllerTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.controllerTypeLabel = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.appearance = new System.Windows.Forms.TabPage();
             this.control = new System.Windows.Forms.TabPage();
             this.advanced = new System.Windows.Forms.TabPage();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.longPressNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.longPressLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.windowWidthNumericUpDown)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.windowHeightNumericUpDown)).BeginInit();
@@ -77,7 +77,6 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mouseCrossLengthNumericUpDown)).BeginInit();
             this.panel6.SuspendLayout();
-            this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
@@ -85,6 +84,8 @@
             this.appearance.SuspendLayout();
             this.control.SuspendLayout();
             this.advanced.SuspendLayout();
+            this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.longPressNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -378,38 +379,6 @@
             this.controlWhenStartCheckBox.Text = "启动时开始控制";
             this.controlWhenStartCheckBox.UseVisualStyleBackColor = true;
             // 
-            // panel7
-            // 
-            this.panel7.Controls.Add(this.longPressComboBox);
-            this.panel7.Controls.Add(this.label8);
-            this.panel7.Location = new System.Drawing.Point(6, 78);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(288, 30);
-            this.panel7.TabIndex = 6;
-            // 
-            // longPressComboBox
-            // 
-            this.longPressComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.longPressComboBox.FormattingEnabled = true;
-            this.longPressComboBox.Items.AddRange(new object[] {
-            "摇杆回中",
-            "退出"});
-            this.longPressComboBox.Location = new System.Drawing.Point(114, 3);
-            this.longPressComboBox.Name = "longPressComboBox";
-            this.longPressComboBox.Size = new System.Drawing.Size(121, 20);
-            this.longPressComboBox.TabIndex = 1;
-            this.longPressComboBox.Tag = "";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(3, 5);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(105, 14);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "长按鼠标中键时";
-            // 
             // OKButton
             // 
             this.OKButton.Font = new System.Drawing.Font("宋体", 10F);
@@ -460,35 +429,35 @@
             // 
             // panel10
             // 
-            this.panel10.Controls.Add(this.dragButtonComboBox);
-            this.panel10.Controls.Add(this.dragButtonLabel);
+            this.panel10.Controls.Add(this.controllerTypeComboBox);
+            this.panel10.Controls.Add(this.controllerTypeLabel);
             this.panel10.Location = new System.Drawing.Point(6, 42);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(288, 30);
             this.panel10.TabIndex = 7;
             // 
-            // dragButtonComboBox
+            // controllerTypeComboBox
             // 
-            this.dragButtonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.dragButtonComboBox.FormattingEnabled = true;
-            this.dragButtonComboBox.Items.AddRange(new object[] {
-            "右键",
-            "中键"});
-            this.dragButtonComboBox.Location = new System.Drawing.Point(114, 3);
-            this.dragButtonComboBox.Name = "dragButtonComboBox";
-            this.dragButtonComboBox.Size = new System.Drawing.Size(121, 20);
-            this.dragButtonComboBox.TabIndex = 1;
-            this.dragButtonComboBox.Tag = "";
+            this.controllerTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.controllerTypeComboBox.FormattingEnabled = true;
+            this.controllerTypeComboBox.Items.AddRange(new object[] {
+            "Xbox360",
+            "Dualshock4（可能有兼容性问题）"});
+            this.controllerTypeComboBox.Location = new System.Drawing.Point(86, 3);
+            this.controllerTypeComboBox.Name = "controllerTypeComboBox";
+            this.controllerTypeComboBox.Size = new System.Drawing.Size(199, 20);
+            this.controllerTypeComboBox.TabIndex = 1;
+            this.controllerTypeComboBox.Tag = "";
             // 
-            // dragButtonLabel
+            // controllerTypeLabel
             // 
-            this.dragButtonLabel.AutoSize = true;
-            this.dragButtonLabel.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dragButtonLabel.Location = new System.Drawing.Point(3, 5);
-            this.dragButtonLabel.Name = "dragButtonLabel";
-            this.dragButtonLabel.Size = new System.Drawing.Size(49, 14);
-            this.dragButtonLabel.TabIndex = 0;
-            this.dragButtonLabel.Text = "拖动键";
+            this.controllerTypeLabel.AutoSize = true;
+            this.controllerTypeLabel.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.controllerTypeLabel.Location = new System.Drawing.Point(3, 5);
+            this.controllerTypeLabel.Name = "controllerTypeLabel";
+            this.controllerTypeLabel.Size = new System.Drawing.Size(77, 14);
+            this.controllerTypeLabel.TabIndex = 0;
+            this.controllerTypeLabel.Text = "控制器类型";
             // 
             // tabControl1
             // 
@@ -517,9 +486,9 @@
             // 
             // control
             // 
+            this.control.Controls.Add(this.panel7);
             this.control.Controls.Add(this.panel6);
             this.control.Controls.Add(this.panel10);
-            this.control.Controls.Add(this.panel7);
             this.control.Location = new System.Drawing.Point(4, 22);
             this.control.Name = "control";
             this.control.Padding = new System.Windows.Forms.Padding(3);
@@ -535,6 +504,53 @@
             this.advanced.Size = new System.Drawing.Size(309, 285);
             this.advanced.TabIndex = 2;
             this.advanced.Text = "高级";
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.longPressNumericUpDown);
+            this.panel7.Controls.Add(this.longPressLabel);
+            this.panel7.Location = new System.Drawing.Point(6, 78);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(288, 30);
+            this.panel7.TabIndex = 8;
+            // 
+            // longPressNumericUpDown
+            // 
+            this.longPressNumericUpDown.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.longPressNumericUpDown.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.longPressNumericUpDown.Location = new System.Drawing.Point(117, 1);
+            this.longPressNumericUpDown.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.longPressNumericUpDown.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.longPressNumericUpDown.Name = "longPressNumericUpDown";
+            this.longPressNumericUpDown.Size = new System.Drawing.Size(57, 23);
+            this.longPressNumericUpDown.TabIndex = 2;
+            this.longPressNumericUpDown.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            // 
+            // longPressLabel
+            // 
+            this.longPressLabel.AutoSize = true;
+            this.longPressLabel.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.longPressLabel.Location = new System.Drawing.Point(3, 5);
+            this.longPressLabel.Name = "longPressLabel";
+            this.longPressLabel.Size = new System.Drawing.Size(119, 14);
+            this.longPressLabel.TabIndex = 0;
+            this.longPressLabel.Text = "长按时间（毫秒）";
             // 
             // SettingsForm
             // 
@@ -566,8 +582,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.mouseCrossLengthNumericUpDown)).EndInit();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
-            this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
@@ -576,6 +590,9 @@
             this.appearance.ResumeLayout(false);
             this.control.ResumeLayout(false);
             this.advanced.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.longPressNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -603,21 +620,21 @@
         private System.Windows.Forms.Label mouseCrossLengthLabel;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.CheckBox controlWhenStartCheckBox;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox longPressComboBox;
         private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.ComboBox dragButtonComboBox;
-        private System.Windows.Forms.Label dragButtonLabel;
+        private System.Windows.Forms.ComboBox controllerTypeComboBox;
+        private System.Windows.Forms.Label controllerTypeLabel;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage appearance;
         private System.Windows.Forms.TabPage control;
         private System.Windows.Forms.TabPage advanced;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.NumericUpDown longPressNumericUpDown;
+        private System.Windows.Forms.Label longPressLabel;
     }
 }

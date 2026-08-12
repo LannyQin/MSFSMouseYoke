@@ -26,11 +26,11 @@
     <Setting Name="enable_when_start" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="on_middle_button_long_pressed" Type="System.String" Scope="User">
-      <Value Profile="(Default)">exit</Value>
+    <Setting Name="controller_type" Type="System.String" Scope="User">
+      <Value Profile="(Default)">xbox360</Value>
     </Setting>
-    <Setting Name="drag_button" Type="System.String" Scope="User">
-      <Value Profile="(Default)">right</Value>
+    <Setting Name="long_press_threshold" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
     </Setting>
   </Settings>
 </SettingsFile>

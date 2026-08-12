@@ -12,7 +12,7 @@ namespace MSFSMouseYoke {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "18.8.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -121,25 +121,25 @@ namespace MSFSMouseYoke {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("exit")]
-        public string on_middle_button_long_pressed {
+        [global::System.Configuration.DefaultSettingValueAttribute("xbox360")]
+        public string controller_type {
             get {
-                return ((string)(this["on_middle_button_long_pressed"]));
+                return ((string)(this["controller_type"]));
             }
             set {
-                this["on_middle_button_long_pressed"] = value;
+                this["controller_type"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("right")]
-        public string drag_button {
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public int long_press_threshold {
             get {
-                return ((string)(this["drag_button"]));
+                return ((int)(this["long_press_threshold"]));
             }
             set {
-                this["drag_button"] = value;
+                this["long_press_threshold"] = value;
             }
         }
     }

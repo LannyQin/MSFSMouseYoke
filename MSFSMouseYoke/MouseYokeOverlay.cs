@@ -69,7 +69,7 @@ namespace MSFSMouseYoke
         private Timer leftLongPressTimer;
         private Point rightMouseDownPosition = Point.Empty;   // 右键按下的起点
         private const int DragThreshold = 10;  // 显示菜单栏的最大拖动距离
-        private const int LongPressThreshold = 300; // 毫秒
+        private int LongPressThreshold = 300; // 毫秒
 
         public MouseYokeOverlay()
         {
@@ -110,6 +110,7 @@ namespace MSFSMouseYoke
             this.MouseMove += OnMouseMove;
             this.MouseUp += OnMouseUp;
             this.Paint += OnPaint;
+            this.LongPressThreshold = settings.long_press_threshold;
             //this.KeyDown += OnKeyDown;
 
             // 激活控制器
@@ -188,7 +189,7 @@ namespace MSFSMouseYoke
             {
                 if (!mouseControlEnabled)
                 {
-                    // 非操控状态：仍然可以拖窗口
+                    // 非操控状态：可以拖窗口
                     isDragging = true;
                     mouseDownPosition = Cursor.Position;
                     formStartPosition = this.Location;
@@ -205,11 +206,13 @@ namespace MSFSMouseYoke
             {
                 mouseControlEnabled = false;
                 DisableMouseLock();
+                Debug("Disabled");
             }
             else
             {
                 mouseControlEnabled = true;
                 EnableMouseLock();
+                Debug("Enabled");
             }
         }
 
@@ -221,7 +224,7 @@ namespace MSFSMouseYoke
                 leftLongPressTimer.Stop(); // 没到时间就松手，取消回中
 
                 TimeSpan pressDuration = DateTime.Now - leftMouseDownTime;
-                if (pressDuration.TotalMilliseconds < LongPressThreshold)
+                if (pressDuration.TotalMilliseconds < LongPressThreshold && Controller.isConnected)
                 {
                     // 只有短按才切换控制
                     ChangeMouseEnableState();
@@ -313,8 +316,9 @@ namespace MSFSMouseYoke
 
         private void ChangeConnectionStatus()
         {
-            Controller.ChangeConnectionStatus();
             ToCenter();
+            Controller.ChangeConnectionStatus();
+            Debug(Controller.isConnected ? "Connected" : "Disconnected");
             mouseControlEnabled = false;
             DisableMouseLock();
         }
@@ -343,6 +347,7 @@ namespace MSFSMouseYoke
 
             // 重置控制器输入
             Controller.Update(0, 0);
+            Debug("Centered");
         }
 
         private void OnPaint(object sender, PaintEventArgs e)
@@ -414,9 +419,8 @@ namespace MSFSMouseYoke
                 pitch = Math.Max(-1, Math.Min(1, pitch));
                 roll = Math.Max(-1, Math.Min(1, roll));
 
-                // 这里可以添加发送控制信号到微软模拟飞行的代码
-                // 例如通过模拟输入、网络协议或内存写入等方式
-                Console.WriteLine($"Pitch: {y:F4}, Roll: {x:F4}");
+
+                Debug($"Pitch: {y:F4}, Roll: {x:F4}");
                 Controller.Update(roll, pitch);
             }
         }
@@ -443,6 +447,11 @@ namespace MSFSMouseYoke
         private void UpdateVisualState()
         {
             this.Invalidate();
+        }
+
+        private void Debug(string message)
+        {
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] {message}");
         }
 
         protected override void WndProc(ref Message m)
